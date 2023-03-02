@@ -1,4 +1,4 @@
-# FieaGameEngineMirror
+# FieaGameEngine
  
 This is an in-progress basis for a data driven game engine that I am currently working on as part of my graduate studies.
 
