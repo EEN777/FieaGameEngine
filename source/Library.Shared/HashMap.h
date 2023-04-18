@@ -179,6 +179,7 @@ namespace FieaGameEngine
 		/// <param name="ChainCount"></param>
 		/// <param name="HashMethod"></param>
 		explicit HashMap(std::size_t, std::function<bool(const TKey&, const TKey&)>, std::function<std::size_t(const TKey&)> = DefaultHash<TKey>{});
+		explicit HashMap(std::initializer_list<PairType> pairs);
 		HashMap(const HashMap&) = default;
 		HashMap& operator=(const HashMap&) = default;
 		HashMap(HashMap&&) noexcept = default;

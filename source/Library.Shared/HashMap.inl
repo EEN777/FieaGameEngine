@@ -49,6 +49,16 @@ namespace FieaGameEngine
 	}
 
 	template<typename TKey, typename TData>
+	inline HashMap<TKey, TData>::HashMap(std::initializer_list<PairType> pairs) :
+		HashMap<TKey, TData>{pairs.size()}
+	{
+		for (auto& pair : pairs)
+		{
+			Emplace(pair);
+		}
+	}
+
+	template<typename TKey, typename TData>
 	inline typename HashMap<TKey, TData>::Iterator HashMap<TKey, TData>::Insert(const PairType& kvPair)
 	{
 		return Emplace(kvPair);

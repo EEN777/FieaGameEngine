@@ -11,6 +11,7 @@ namespace FieaGameEngine
 {
 	class Attributed;
 	class Scope;
+	class JsonTableParseHelper;
 	/// <summary>
 	/// Datum is a class that is part of a larger hierarchy that can contain multiple different types including int, float, string, vec4, mat4, and RTTI*. It stores the values in a dynamic array. In order to utilize the storage
 	/// of a Datum, the type must first be set. This can be done during initialization or after initialization. The type cannot be changed dynamically unless being assigned to the value of another datum. Datums can also serve as a thin wrapper for
@@ -21,6 +22,7 @@ namespace FieaGameEngine
 	public:
 		friend Scope;
 		friend Attributed;
+		friend JsonTableParseHelper;
 		/// <summary>
 		/// Enumeration for the possible data types.
 		/// </summary>
@@ -137,8 +139,7 @@ namespace FieaGameEngine
 		/// <param name="other">RTTI* to assign to Datum</param>
 		/// <returns>Reference to the Datum being assigned.</returns>
 		Datum& operator=(RTTI* const);
-		Datum& operator=(Scope* const);
-		Scope& operator[](std::size_t index);
+		Datum& operator=(const Scope&);
 		/// <summary>
 		/// Checks equivalence to another Datum. This comparison does not take into account the capacity of the Datums, but rather the type, size, and contents of said Datums.
 		/// </summary>
@@ -336,6 +337,7 @@ namespace FieaGameEngine
 		/// </summary>
 		/// <param name="item">RTTI* value to put at the end</param>
 		void PushBack(RTTI* item);
+		void PushBackFromString(const std::string& string);
 		/// <summary>
 		/// Sets the value at the specified position granted that the index is less than the Datum's size.
 		/// </summary>
@@ -754,6 +756,8 @@ namespace FieaGameEngine
 		/// <param name="string">std::string to grab the data from.</param>
 		/// <param name="index">Index at which to place the data.</param>
 		void SetMatrixFromString(const std::string& string, std::size_t index);
+		void PushBackVectorFromString(const std::string& string);
+		void PushBackMatrixFromString(const std::string& string);
 
 		using ToStringFunction = std::string(Datum::*)(std::size_t);
 		inline static const std::array< ToStringFunction, 7> _toStringFunctions
@@ -790,6 +794,18 @@ namespace FieaGameEngine
 			&SetMatrixFromString,  //DatumTypes::Matrix
 			nullptr,			   //DatumTypes::Pointer
 			nullptr				   //DatumTypes::Table	
+		};
+
+		using PushBackFromStringFunction = void(Datum::*)(const std::string&);
+		inline static const std::array<PushBackFromStringFunction, 7> _pushbackFromStringFunctions
+		{
+			nullptr,					//DatumTypes::Integer = 0
+			nullptr,					//DatumTypes::Float
+			nullptr,				    //DatumTypes::String
+			&PushBackVectorFromString,  //DatumTypes::Vector
+			&PushBackMatrixFromString,  //DatumTypes::Matrix
+			nullptr,					//DatumTypes::Pointer
+			nullptr						//DatumTypes::Table	
 		};
 	};
 }

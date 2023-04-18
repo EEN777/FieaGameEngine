@@ -7,6 +7,9 @@
     <Filter Include="Tests">
       <UniqueIdentifier>{a9294c18-2f4a-43cf-b6d4-f8e24e0dceb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content">
+      <UniqueIdentifier>{3827c093-a238-4c6d-8da6-4ec0b4eb96fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SListTests.cpp">
@@ -40,6 +43,36 @@
     <ClCompile Include="AttributedTests.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="StackTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="ParseCoordinatorTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonTestParseHelper.cpp">
+      <Filter>Support Code</Filter>
+    </ClCompile>
+    <ClCompile Include="FactoryTesting.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionTesting.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionIncrement.cpp">
+      <Filter>Support Code</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Support Code</Filter>
+    </ClCompile>
+    <ClCompile Include="EventTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="ReactionTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -61,5 +94,28 @@
     <ClInclude Include="AttributedFoo.h">
       <Filter>Support Code</Filter>
     </ClInclude>
+    <ClInclude Include="JsonTestParseHelper.h">
+      <Filter>Support Code</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Support Code</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionIncrement.h">
+      <Filter>Support Code</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\Content\Content.json">
+      <Filter>Content</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Content\ActionTest.json">
+      <Filter>Content</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Content\ActionExpressionTest.json">
+      <Filter>Content</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\Content\ReactionTest.json">
+      <Filter>Content</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

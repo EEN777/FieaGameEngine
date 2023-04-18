@@ -130,6 +130,17 @@ namespace LibraryDesktopTests
 			}
 		}
 
+		TEST_METHOD(InitializerListConstruction)
+		{
+			HashMap<std::string, int> map{ {"String1", 1}, {"String2", 2}, {"String3", 3}, {"String4", 4}, {"String5", 5} };
+
+			Assert::AreEqual(1, map.At("String1"));
+			Assert::AreEqual(2, map.At("String2"));
+			Assert::AreEqual(3, map.At("String3"));
+			Assert::AreEqual(4, map.At("String4"));
+			Assert::AreEqual(5, map.At("String5"));
+		}
+
 		TEST_METHOD(Hash)
 		{
 			{

@@ -17,16 +17,13 @@ namespace FieaGameEngine
 	Scope::Scope(Scope&& other) noexcept :
 		_orderVector{ std::move(other._orderVector) }, _table{ std::move(other._table) }, _size{ other._size }
 	{
-		if (this != &other)
+		other._size = 0;
+		if (other._parent != nullptr)
 		{
-			other._size = 0;
-			if (other._parent != nullptr)
-			{
-				Scope* original = other.Orphan();
-				delete original;
-			}
-			ReparentImmediateFamily();
+			Scope* original = other.Orphan();
+			delete original;
 		}
+		ReparentImmediateFamily();
 	}
 
 	Scope& Scope::operator=(const Scope& other)
@@ -76,9 +73,12 @@ namespace FieaGameEngine
 				std::size_t position{ 0 };
 				for (auto& pair : _orderVector)
 				{
-					if (*pair != *rhs._orderVector[position])
+					if (pair->first != "this")
 					{
-						return false;
+						if (*pair != *rhs._orderVector[position])
+						{
+							return false;
+						}
 					}
 					++position;
 				}
@@ -150,7 +150,7 @@ namespace FieaGameEngine
 			Scope* parent = _parent;
 			while (parent != nullptr)
 			{
-				foundDatum = parent->Find(name);
+				foundDatum = parent->Search(name);
 				if (foundDatum != nullptr)
 				{
 					break;
@@ -324,10 +324,10 @@ namespace FieaGameEngine
 			Datum& currentDatum = item->second;
 			if (currentDatum.Type() == Datum::DatumTypes::Table)
 			{
-				std::size_t datumSize{ currentDatum.Size() };
-				for (std::size_t position{ 0 }; position < datumSize; ++position)
+				for (std::size_t position{ currentDatum.Size() }; position > 0; --position)
 				{
-					delete currentDatum.GetAsScope();
+					currentDatum.GetAsScope(position - 1)->_parent = nullptr;
+					delete currentDatum.GetAsScope(position - 1);
 				}
 			}
 		}

@@ -1,0 +1,32 @@
+{
+  "Monster Rob_Zombie": {
+    "Name": "Monster1",
+    "Position": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Rotation": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Scale": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Health": 100,
+    "Damage": 20,
+    "Actions": [
+      {
+        "ActionEvent ActionEvent": {
+          "SubType": "TestEvent",
+          "Delay": 600,
+          "Operand": "Health",
+          "Step": 20
+        }
+
+      }
+    ],
+    "ReactionAttributed ReactionAttributed": {
+      "SubType": "TestEvent",
+      "Actions": [
+        {
+          "ActionIncrement Increment": {
+            "Operand": "Null",
+            "Step": 0
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "Monster Rob_Zombie": {
+    "Name": "Monster1",
+    "Position": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Rotation": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Scale": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Health": 100,
+    "Damage": 20,
+    "Actions": [
+      {
+        "ActionList ActionList": {
+          "Actions": [
+            {
+              "ActionIncrement Increment": {
+                "Name":  "Increment",
+                "Operand": "Health",
+                "Step": 5
+              }
+            }
+          ]
+        }
+      },
+      {
+        "ActionListSwitch Switch": {
+          "Name": "Switch",
+          "Value": "Red",
+          "Actions": [
+            {
+              "ActionIncrement Red": {
+                "Name": "Red",
+                "Operand": "Health",
+                "Step": 10
+              }
+            },
+            {
+              "ActionIncrement Blue": {
+                "Name": "Blue",
+                "Operand": "Health",
+                "Step": 20,
+                "break": 1 
+              }
+            },
+            {
+              "ActionIncrement Default": {
+                "Name": "Default",
+                "Operand": "Health",
+                "Step": 30
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -2,23 +2,26 @@
 #include "Vector.h"
 #include "HashMap.h"
 #include "Datum.h"
+#include "Factory.h"
 #include "gsl/gsl"
 
 namespace FieaGameEngine
 {
+	class JsonTableParseHelper;
 	/// <summary>
 	/// A Scope is an RTTI instance that can be inherited from that is a table that can contain data and tables of other tables or data.
 	/// </summary>
 	class Scope : public FieaGameEngine::RTTI
 	{
+		friend JsonTableParseHelper;
 		RTTI_DECLARATIONS(Scope, FieaGameEngine::RTTI);
 	public:
 		using Pair_Type = std::pair<const std::string, Datum>;
 
-	private:
+	protected:
 		Vector<Pair_Type*> _orderVector{};
 		HashMap<std::string, Datum> _table{};
-
+	private:
 		std::size_t _size{ 0 };
 		Scope* _parent{ nullptr };
 
@@ -188,7 +191,7 @@ namespace FieaGameEngine
 		/// <summary>
 		/// Clears all contents of the scope.
 		/// </summary>
-		void Clear();
+		virtual void Clear();
 
 	private:
 		Scope(Scope* parent);
@@ -196,6 +199,8 @@ namespace FieaGameEngine
 		inline void CopyHelper(const Scope& sourceScope, Scope& destinationScope);
 		void ReparentImmediateFamily();
 	};
+	ConcreteFactory(Scope, Scope);
 }
 
 #include "Scope.inl"
+

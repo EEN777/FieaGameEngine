@@ -1,5 +1,6 @@
 #pragma once
 #include "Attributed.h"
+#include "Factory.h"
 
 namespace UnitTests
 {
@@ -16,7 +17,6 @@ namespace UnitTests
 		AttributedFoo& operator=(const AttributedFoo&) = default;
 		AttributedFoo& operator=(AttributedFoo&&) = default;
 		~AttributedFoo() = default;
-
 		int externalInteger{};
 		float externalFloat{};
 		std::string externalString{};
@@ -36,6 +36,7 @@ namespace UnitTests
 		static FieaGameEngine::Vector<FieaGameEngine::Signature> Signatures();
 
 		
-
 	};
+
+	ConcreteFactory(AttributedFoo, FieaGameEngine::Scope);
 }

@@ -1,0 +1,241 @@
+{
+  "Monster Rob_Zombie": {
+    "Name": "Monster1",
+    "Position": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Rotation": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Scale": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Health": 100,
+    "Damage": 20,
+    "Actions": [
+      {
+        "ActionList ActionList": {
+          "Actions": [
+            {
+              "ActionIncrement Increment": {
+                "Name": "Increment",
+                "Operand": "Health",
+                "Step": 5
+              }
+            }
+          ]
+        }
+      },
+      {
+        "ActionListSwitch Switch": {
+          "Name": "Switch",
+          "Value": "Red",
+          "Actions": [
+            {
+              "ActionIncrement Red": {
+                "Name": "Red",
+                "Operand": "Health",
+                "Step": 10
+              }
+            },
+            {
+              "ActionIncrement Blue": {
+                "Name": "Blue",
+                "Operand": "Health",
+                "Step": 20,
+                "break": 1
+              }
+            },
+            {
+              "ActionIncrement Default": {
+                "Name": "Default",
+                "Operand": "Health",
+                "Step": 30
+              }
+            }
+          ]
+        }
+      },
+      {
+        "ActionExpression TestExpression": {
+          "Name": "TestExpression",
+          "Expression": "Health = ( 4 + 4 * 2 / ( 1 - 5 ) )"
+        }
+      },
+      {
+        "ActionExpression FloatExpression": {
+          "Name": "FloatExpression",
+          "Expression": "Speed = ( 3.2_f + 2.4_f - ( 23.2_f * 7.6_f ) / 3.2_f )"
+        }
+      },
+      {
+        "ActionExpression VectorAddition": {
+          "Name": "VectorAddition",
+          "Expression": "Vector0 = ( vec4(1.2,3.2,4.7,0.2) + vec4(1.2,3.2,4.7,0.2) )"
+        }
+      },
+      {
+        "ActionExpression VectorSubtraction": {
+          "Name": "VectorSubtraction",
+          "Expression": "Vector1 = ( vec4(1.2,3.2,4.7,0.2) - vec4(1.2,3.2,4.7,0.2) )"
+        }
+      },
+      {
+        "ActionExpression VectorMultiplication": {
+          "Name": "VectorMultiplication",
+          "Expression": "Vector2 = ( vec4(1.2,3.2,4.7,0.2) * vec4(1.2,3.2,4.7,0.2) )"
+        }
+      },
+      {
+        "ActionExpression VectorDivision": {
+          "Name": "VectorDivision",
+          "Expression": "Vector3 = ( Position / vec4(1.2,3.2,4.7,0.2) )"
+        }
+      },
+      {
+        "ActionExpression IntegerRemainder": {
+          "Name": "IntegerRemainder",
+          "Expression": "Damage = ( 7 % 5 )"
+        }
+      },
+      {
+        "ActionExpression MatrixAddition": {
+          "Name": "MatrixAddition",
+          "Expression": "Matrix0 = ( mat4x4((1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2)) + mat4x4((1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2)) )"
+        }
+      },
+      {
+        "ActionExpression MatrixSubtraction": {
+          "Name": "MatrixSubtraction",
+          "Expression": "Matrix1 = ( mat4x4((1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2)) - mat4x4((1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2)) )"
+        }
+      },
+      {
+        "ActionExpression MatrixMultiplication": {
+          "Name": "MatrixMultiplication",
+          "Expression": "Matrix2 = ( mat4x4((1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2)) * mat4x4((1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2)) )"
+        }
+      },
+      {
+        "ActionExpression MatrixDivision": {
+          "Name": "MatrixDivision",
+          "Expression": "Matrix3 = ( mat4x4((1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2)) / mat4x4((1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2),(1.2,3.2,4.7,0.2)) )"
+        }
+      },
+      {
+        "ActionExpression StringConcatenation": {
+          "Name": "StringConcatenation",
+          "Expression": "Species = ( Cat_s + Dog_s )"
+        }
+      },
+      {
+        "ActionExpression LessThanInteger": {
+          "Name": "LessThanInteger",
+          "Expression": "Health < 3"
+        }
+      },
+      {
+        "ActionExpression LessThanFloat": {
+          "Name": "LessThanFloat",
+          "Expression": "Speed < 3.1_f"
+        }
+      },
+      {
+        "ActionExpression LessThanString": {
+          "Name": "LessThanString",
+          "Expression": "Cat_s < Dog_s"
+        }
+      },
+      {
+        "ActionExpression LessThanEqualToInteger": {
+          "Name": "LessThanEqualToInteger",
+          "Expression": "2 <= 3 "
+        }
+      },
+      {
+        "ActionExpression LessThanEqualToFloat": {
+          "Name": "LessThanEqualToFloat",
+          "Expression": "2.2_f <= 3.1_f"
+        }
+      },
+      {
+        "ActionExpression LessThanEqualToString": {
+          "Name": "LessThanEqualToString",
+          "Expression": "Cat_s <= Dog_s"
+        }
+      },
+      {
+        "ActionExpression GreaterThanInteger": {
+          "Name": "GreaterThanInteger",
+          "Expression": "2 > 3"
+        }
+      },
+      {
+        "ActionExpression GreaterThanFloat": {
+          "Name": "GreaterThanFloat",
+          "Expression": "2.2_f > 3.1_f"
+        }
+      },
+      {
+        "ActionExpression GreaterThanString": {
+          "Name": "GreaterThanString",
+          "Expression": "Cat_s > Dog_s"
+        }
+      },
+      {
+        "ActionExpression GreaterThanEqualToInteger": {
+          "Name": "GreaterThanEqualToInteger",
+          "Expression": "2 >= 3"
+        }
+      },
+      {
+        "ActionExpression GreaterThanEqualToFloat": {
+          "Name": "GreaterThanEqualToFloat",
+          "Expression": "2.2_f >= 3.1_f"
+        }
+      },
+      {
+        "ActionExpression GreaterThanEqualToString": {
+          "Name": "GreaterThanEqualToString",
+          "Expression": "Species >= CatDog_s"
+        }
+      },
+      {
+        "ActionExpression EqualToInteger": {
+          "Name": "EqualToInteger",
+          "Expression": "2 == 3"
+        }
+      },
+      {
+        "ActionExpression EqualToFloat": {
+          "Name": "EqualToFloat",
+          "Expression": "2.2_f == 3.1_f"
+        }
+      },
+      {
+        "ActionExpression EqualToString": {
+          "Name": "EqualToString",
+          "Expression": "Cat_s == Dog_s"
+        }
+      },
+      {
+        "ActionExpression NotEqualToInteger": {
+          "Name": "NotEqualToInteger",
+          "Expression": "2 != 3"
+        }
+      },
+      {
+        "ActionExpression NotEqualToFloat": {
+          "Name": "NotEqualToFloat",
+          "Expression": "2.2_f != 3.1_f"
+        }
+      },
+      {
+        "ActionExpression NotEqualToString": {
+          "Name": "NotEqualToString",
+          "Expression": "Cat_s != Dog_s"
+        }
+      },
+      {
+        "ActionExpression LogicalNot": {
+          "Name": "LogicalNot",
+          "Expression": "! 0"
+        }
+      }
+    ]
+  }
+}

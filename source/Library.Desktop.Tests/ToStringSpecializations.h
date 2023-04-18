@@ -5,12 +5,20 @@
 #include "Vector.h"
 #include "HashMap.h"
 #include "Foo.h"
+#include "AttributedFoo.h"
 #include "glm/glm.hpp"
 #include <glm/gtx/string_cast.hpp>
 #include <codecvt>
 
 namespace Microsoft::VisualStudio::CppUnitTestFramework
 {
+	template<>
+	inline std::wstring ToString<UnitTests::AttributedFoo>(const UnitTests::AttributedFoo& t)
+	{
+		auto string = t.ToString();
+		return std::wstring(string.begin(), string.end());
+	}
+
 	template<>
 	inline std::wstring ToString<UnitTests::Foo>(const UnitTests::Foo& t)
 	{

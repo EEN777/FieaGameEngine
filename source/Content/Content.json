@@ -1,0 +1,30 @@
+{
+  "GameObject foo": {
+    "Name": "foo",
+    "Position": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Rotation": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Scale": "vec4(1.2, 3.2, 4.7, 0.2)",
+    "Children": [
+      {
+        "Monster Monster1": {
+          "Name": "Monster1",
+          "Position": "vec4(1.2, 3.2, 4.7, 0.2)",
+          "Rotation": "vec4(1.2, 3.2, 4.7, 0.2)",
+          "Scale": "vec4(1.2, 3.2, 4.7, 0.2)",
+          "Health": 100,
+          "Damage": 20
+        }
+      },
+      {
+        "Monster Monster2": {
+          "Name": "Monster2",
+          "Position": "vec4(1.2, 3.2, 4.7, 0.2)",
+          "Rotation": "vec4(1.2, 3.2, 4.7, 0.2)",
+          "Scale": "vec4(1.2, 3.2, 4.7, 0.2)",
+          "Health": 100,
+          "Damage": 20
+        }
+      }
+    ]
+  }
+}

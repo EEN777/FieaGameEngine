@@ -35,6 +35,11 @@ namespace FieaGameEngine
 		/// </summary>
 		struct Iterator final
 		{
+			using iterator_category = std::bidirectional_iterator_tag;
+			using value_type = T;
+			using pointer = value_type*;
+			using reference = value_type&;
+
 			friend Vector;
 			friend struct ConstIterator;
 		private:
@@ -355,12 +360,12 @@ namespace FieaGameEngine
 		/// Copy Constructs a vector given another vector.
 		/// </summary>
 		/// <param name="other"></param>
-		explicit Vector(const Vector&);
+		Vector(const Vector&);
 		/// <summary>
 		/// Move Constructs a vector given an rvalue reference to a vector.
 		/// </summary>
 		/// <param name="other"></param>
-		explicit Vector(Vector&&) noexcept;
+		Vector(Vector&&) noexcept;
 		/// <summary>
 		/// Copies the contents of a vector into another vector.
 		/// </summary>

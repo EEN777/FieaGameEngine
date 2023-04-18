@@ -18,16 +18,23 @@ namespace FieaGameEngine
 
 		}
 		~Signature() = default;
+		Signature(const Signature&) = default;
 	};
 
 	class TypeManager final
 	{
 	public:
+		/// <summary>
+		/// Retrieves the current instance of the TypeManager. Returns nullptr if one hasn't been made.
+		/// </summary>
+		/// <returns>The single instance of the TypeManager.</returns>
 		inline static TypeManager* Instance()
 		{
 			return _instance;
 		}
-
+		/// <summary>
+		/// Creates an instance of a TypeManager if one does not currently exist.
+		/// </summary>
 		inline static void CreateInstance()
 		{
 			assert(_instance == nullptr);
@@ -36,20 +43,31 @@ namespace FieaGameEngine
 				_instance = new TypeManager;
 			}
 		}
-
+		/// <summary>
+		/// Destroys the current instance of the TypeManager.
+		/// </summary>
 		inline static void DestroyInstance()
 		{
 			delete _instance;
+			_instance = nullptr;
 		}
-
-		inline [[nodiscard]] Vector<Signature>& GetSignatureForTypeID(std::size_t typeId)
+		/// <summary>
+		/// Searches a container of type signatures for the matching RTTI Id key and returns a vector of signatures for each member.
+		/// </summary>
+		/// <param name="typeId">The RTTI TypeId you are searching for.</param>
+		/// <returns>The vector of signatures for the corresponding RTTI type.</returns>
+		inline [[nodiscard]] Vector<Signature>& GetSignatureForTypeID(RTTI::IdType typeId)
 		{
 			auto position = _signatures.Find(typeId);
 			assert(position != _signatures.end());
 			return position->second;
 		}
-
-		inline void AddSignature(std::size_t typeId, const Vector<Signature>& signatures)
+		/// <summary>
+		/// Adds a signature of the corresponding RTTI IdType that was passed in into the signatures hashmap and adds the given vector into it at that key.
+		/// </summary>
+		/// <param name="typeId">The RTTI IdType for the class.</param>
+		/// <param name="signatures">A Vector of Signatures.</param>
+		inline void AddSignature(RTTI::IdType typeId, const Vector<Signature>& signatures)
 		{
 			_signatures.Emplace(typeId, signatures);
 		}

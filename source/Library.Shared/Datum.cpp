@@ -165,49 +165,79 @@ FieaGameEngine::Datum& FieaGameEngine::Datum::operator=(Datum&& other) noexcept
 
 FieaGameEngine::Datum& FieaGameEngine::Datum::operator=(int other)
 {
-	assert(_isExternal == false);
 	_type = _type == DatumTypes::Unknown ? DatumTypes::Integer : _type;
 	assert(_type == DatumTypes::Integer);
-	ScalarAssignment(&other);
+	if (_isExternal)
+	{
+		Set(other);
+	}
+	else
+	{
+		ScalarAssignment(&other);
+	}
 	return *this;
 }
 
 FieaGameEngine::Datum& FieaGameEngine::Datum::operator=(float other)
 {
-	assert(_isExternal == false);
 	_type = _type == DatumTypes::Unknown ? DatumTypes::Float : _type;
 	assert(_type == DatumTypes::Float);
-	ScalarAssignment(&other);
+	if (_isExternal)
+	{
+		Set(other);
+	}
+	else
+	{
+		ScalarAssignment(&other);
+	}
 	return *this;
 }
 
 FieaGameEngine::Datum& FieaGameEngine::Datum::operator=(const std::string& other)
 {
-	assert(_isExternal == false);
 	_type = _type == DatumTypes::Unknown ? DatumTypes::String : _type;
 	assert(_type == DatumTypes::String);
-	_typeSize = sizeof(std::string);
-	Reset();
-	_capacity = 0;
-	PushBack(other);
+	if (_isExternal)
+	{
+		Set(other);
+	}
+	else
+	{
+		_typeSize = sizeof(std::string);
+		Reset();
+		_capacity = 0;
+		PushBack(other);
+	}
 	return *this;
 }
 
 FieaGameEngine::Datum& FieaGameEngine::Datum::operator=(const glm::vec4& other)
 {
-	assert(_isExternal == false);
 	_type = _type == DatumTypes::Unknown ? DatumTypes::Vector : _type;
 	assert(_type == DatumTypes::Vector);
-	ScalarAssignment(&other);
+	if (_isExternal)
+	{
+		Set(other);
+	}
+	else
+	{
+		ScalarAssignment(&other);
+	}
 	return *this;
 }
 
 FieaGameEngine::Datum& FieaGameEngine::Datum::operator=(const glm::mat4& other)
 {
-	assert(_isExternal == false);
 	_type = _type == DatumTypes::Unknown ? DatumTypes::Matrix : _type;
 	assert(_type == DatumTypes::Matrix);
-	ScalarAssignment(&other);
+	if (_isExternal)
+	{
+		Set(other);
+	}
+	else
+	{
+		ScalarAssignment(&other);
+	}
 	return *this;
 }
 
@@ -216,6 +246,15 @@ FieaGameEngine::Datum& FieaGameEngine::Datum::operator=(RTTI* const other)
 	assert(_isExternal == false);
 	_type = _type == DatumTypes::Unknown ? DatumTypes::Pointer : _type;
 	assert(_type == DatumTypes::Pointer);
+	ScalarAssignment(&other);
+	return *this;
+}
+
+FieaGameEngine::Datum& FieaGameEngine::Datum::operator=(const Scope& other)
+{
+	assert(_isExternal == false);
+	_type = _type == DatumTypes::Unknown ? DatumTypes::Table : _type;
+	assert(_type == DatumTypes::Table);
 	ScalarAssignment(&other);
 	return *this;
 }
@@ -591,6 +630,11 @@ void FieaGameEngine::Datum::PushBack(int item)
 {
 	if (!_isExternal)
 	{
+		if (_type == DatumTypes::Unknown)
+		{
+			_type = DatumTypes::Integer;
+			_typeSize = sizeof(int);
+		}
 		assert(_type == DatumTypes::Integer);
 		PushBack(&item);
 	}
@@ -600,6 +644,11 @@ void FieaGameEngine::Datum::PushBack(float item)
 {
 	if (!_isExternal)
 	{
+		if (_type == DatumTypes::Unknown)
+		{
+			_type = DatumTypes::Float;
+			_typeSize = sizeof(float);
+		}
 		assert(_type == DatumTypes::Float);
 		PushBack(&item);
 	}
@@ -609,6 +658,11 @@ void FieaGameEngine::Datum::PushBack(const std::string& item)
 {
 	if (!_isExternal)
 	{
+		if (_type == DatumTypes::Unknown)
+		{
+			_type = DatumTypes::String;
+			_typeSize = sizeof(std::string);
+		}
 		assert(_type == DatumTypes::String);
 		if (_capacity == _size)
 		{
@@ -622,6 +676,11 @@ void FieaGameEngine::Datum::PushBack(std::string&& item)
 {
 	if (!_isExternal)
 	{
+		if (_type == DatumTypes::Unknown)
+		{
+			_type = DatumTypes::String;
+			_typeSize = sizeof(std::string);
+		}
 		assert(_type == DatumTypes::String);
 		if (_capacity == _size)
 		{
@@ -635,6 +694,11 @@ void FieaGameEngine::Datum::PushBack(const glm::vec4& item)
 {
 	if (!_isExternal)
 	{
+		if (_type == DatumTypes::Unknown)
+		{
+			_type = DatumTypes::Vector;
+			_typeSize = sizeof(glm::vec4);
+		}
 		assert(_type == DatumTypes::Vector);
 		PushBack(&item);
 	}
@@ -644,6 +708,11 @@ void FieaGameEngine::Datum::PushBack(const glm::mat4& item)
 {
 	if (!_isExternal)
 	{
+		if (_type == DatumTypes::Unknown)
+		{
+			_type = DatumTypes::Matrix;
+			_typeSize = sizeof(glm::mat4);
+		}
 		assert(_type == DatumTypes::Matrix);
 		PushBack(&item);
 	}
@@ -656,6 +725,14 @@ void FieaGameEngine::Datum::PushBack(RTTI* item)
 		assert(_type == DatumTypes::Pointer);
 		PushBack(&item);
 	}
+}
+
+void FieaGameEngine::Datum::PushBackFromString(const std::string& string)
+{
+	assert(_type != DatumTypes::Unknown && _type != DatumTypes::Pointer);
+	PushBackFromStringFunction func = _pushbackFromStringFunctions[static_cast<int>(_type)];
+	assert(func != nullptr);
+	(this->*func)(string);
 }
 
 void FieaGameEngine::Datum::PushBack(Scope* item)
@@ -1210,7 +1287,7 @@ void FieaGameEngine::Datum::SetFloatFromString(const std::string& string, std::s
 void FieaGameEngine::Datum::SetVectorFromString(const std::string& string, std::size_t index)
 {
 	glm::vec4 vec{};
-	int result = sscanf_s(string.c_str(), "vec4(%f, %f, %f, %f)", &vec.x, &vec.y, &vec.z, &vec.w);
+	int result = sscanf_s(string.c_str(), " vec4(%f, %f, %f, %f) ", &vec.x, &vec.y, &vec.z, &vec.w);
 	assert(result == 4);
 	if (result == 4)
 	{
@@ -1224,7 +1301,7 @@ void FieaGameEngine::Datum::SetMatrixFromString(const std::string& string, std::
 	glm::vec4 vec2{};
 	glm::vec4 vec3{};
 	glm::vec4 vec4{};
-	int result = sscanf_s(string.c_str(), "mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))",
+	int result = sscanf_s(string.c_str(), " mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f)) ",
 		&vec1.x, &vec1.y, &vec1.z, &vec1.w,
 		&vec2.x, &vec2.y, &vec2.z, &vec2.w,
 		&vec3.x, &vec3.y, &vec3.z, &vec3.w,
@@ -1234,6 +1311,36 @@ void FieaGameEngine::Datum::SetMatrixFromString(const std::string& string, std::
 	if (result == 16)
 	{
 		Set(glm::mat4{ vec1, vec2, vec3, vec4 }, index);
+	}
+}
+
+void FieaGameEngine::Datum::PushBackVectorFromString(const std::string& string)
+{
+	glm::vec4 vec{};
+	int result = sscanf_s(string.c_str(), " vec4(%f, %f, %f, %f) ", &vec.x, &vec.y, &vec.z, &vec.w);
+	assert(result == 4);
+	if (result == 4)
+	{
+		PushBack(vec);
+	}
+}
+
+void FieaGameEngine::Datum::PushBackMatrixFromString(const std::string& string)
+{
+	glm::vec4 vec1{};
+	glm::vec4 vec2{};
+	glm::vec4 vec3{};
+	glm::vec4 vec4{};
+	int result = sscanf_s(string.c_str(), " mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f)) ",
+		&vec1.x, &vec1.y, &vec1.z, &vec1.w,
+		&vec2.x, &vec2.y, &vec2.z, &vec2.w,
+		&vec3.x, &vec3.y, &vec3.z, &vec3.w,
+		&vec4.x, &vec4.y, &vec4.z, &vec4.w
+	);
+	assert(result == 16);
+	if (result == 16)
+	{
+		PushBack(glm::mat4{ vec1, vec2, vec3, vec4 });
 	}
 }
 
